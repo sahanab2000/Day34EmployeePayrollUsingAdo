@@ -1,0 +1,56 @@
+--Query to use the payroll_service Database
+use payroll_service
+
+--------Redo UC4
+select *
+from Company
+inner join employee on Company.CompanyId = employee.CompanyId
+inner join Payroll on Payroll.empID = employee.empID
+inner join EmployeeDepartment on EmployeeDepartment.empID = employee.empID
+inner join Department on Department.DeptId = EmployeeDepartment.DeptId
+
+--------Redo UC5
+--Query to retrieve salary data for a particular employee 
+SELECT empName,NetPay FROM Company 
+inner join employee on Company.CompanyId = employee.CompanyId
+inner join Payroll on Payroll.empID = employee.empID
+WHERE empName = 'Bill'
+
+--Query to retrieve salary data for all employees who have joined in a particular data range 
+--from the payroll service database
+SELECT CompanyName,empName,empGender, empAddress, empPhone, empStartDate FROM Company 
+inner join employee on Company.CompanyId = employee.CompanyId
+inner join Payroll on Payroll.empID = employee.empID
+WHERE empStartDate BETWEEN CAST('2018-01-01' AS date) AND GETDATE()
+
+--------Redo UC7
+--Query to SUM
+SELECT SUM(NetPay) FROM Company 
+inner join employee on Company.CompanyId = employee.CompanyId
+inner join Payroll on Payroll.empID = employee.empID
+WHERE empGender = 'F' GROUP BY empGender
+
+--Query to AVG
+SELECT AVG(NetPay) FROM Company 
+inner join employee on Company.CompanyId = employee.CompanyId
+inner join Payroll on Payroll.empID = employee.empID
+WHERE empGender = 'M' GROUP BY empGender
+
+
+--Query to MIN
+SELECT MIN(NetPay) FROM Company 
+inner join employee on Company.CompanyId = employee.CompanyId
+inner join Payroll on Payroll.empID = employee.empID
+WHERE empGender = 'M' GROUP BY empGender
+
+--Query to MAX
+SELECT Max(NetPay) FROM Company 
+inner join employee on Company.CompanyId = employee.CompanyId
+inner join Payroll on Payroll.empID = employee.empID
+WHERE empGender = 'M' GROUP BY empGender
+
+--Query to Count
+SELECT COUNT(NetPay) FROM Company 
+inner join employee on Company.CompanyId = employee.CompanyId
+inner join Payroll on Payroll.empID = employee.empID
+WHERE empGender = 'M' GROUP BY empGender
